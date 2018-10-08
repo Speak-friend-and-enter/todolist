@@ -19,4 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('task-lists', 'TaskListController');
+Route::resource('/task-lists', 'TaskListController', [
+    'except' => ['edit', 'show', 'store']
+]);
+
+Route::post('/task-lists/get-tasks', 'TaskListController@getTasks');
+
+Route::resource('/task', 'TaskController', [
+    'except' => ['edit', 'show', 'store']
+]);

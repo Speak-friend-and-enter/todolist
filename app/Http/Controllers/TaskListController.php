@@ -25,8 +25,12 @@ class TaskListController extends Controller
      */
     public function index()
     {
-//        return response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
-        return view('task_lists', ['taskLists' => TaskList::all()->jsonSerialize()]);
+        return view('task_lists');
+    }
+
+    public function getTasks()
+    {
+        return response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**
@@ -37,9 +41,9 @@ class TaskListController extends Controller
     public function create()
     {
         $taskList = new TaskList();
-        $taskList->name = 'test';
-        $taskList->user_id = Auth::user()->id;
-
+        $taskList->name = 'Default name';
+        $taskList->user_id = Auth::id();
+        $taskList->save();
 
         return response($taskList->jsonSerialize(), Response::HTTP_CREATED);
     }

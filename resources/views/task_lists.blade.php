@@ -2,12 +2,8 @@
 
 @section('content')
     <div class="container">
-        <span>Add</span>
-    </div>
-
-    <div class="container">
         <div class="row">
-            <task-lists-component></task-lists-component>
+            <app-component></app-component>
         </div>
     </div>
 @endsection

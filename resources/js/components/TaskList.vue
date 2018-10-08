@@ -1,10 +1,15 @@
 <template>
 
     <div class="card">
-        <div class="card-header">{{ name }}</div>
+        <div class="card-header">
+            <label>
+                <input v-model="name">
+            </label>
+            <button class="btn-info" @click="updateListName">Update</button>
+            <button class="btn-danger" @click="deleteList">Delete</button>
+        </div>
         <div class="card-body">
             tasks.
-            <button @click="del">Delete</button>
         </div>
     </div>
 
@@ -12,12 +17,13 @@
 
 <script>
     export default {
-        name: "TaskLists",
+        name: "TaskList",
+        props: ['id', 'name', 'tasks'],
         methods: {
-            update(val) {
-                this.$emit('update', this.id, val.target.selectedOptions[0].value);
+            updateListName() {
+                this.$emit('update', this.id, this.name);
             },
-            del() {
+            deleteList() {
                 this.$emit('delete', this.id);
             }
         }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\TaskList;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TaskListController extends Controller
 {
@@ -22,7 +25,8 @@ class TaskListController extends Controller
      */
     public function index()
     {
-        return view('task_lists');
+//        return response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
+        return view('task_lists', ['taskLists' => TaskList::all()->jsonSerialize()]);
     }
 
     /**
@@ -32,7 +36,12 @@ class TaskListController extends Controller
      */
     public function create()
     {
-        //
+        $taskList = new TaskList();
+        $taskList->name = 'test';
+        $taskList->user_id = Auth::user()->id;
+
+
+        return response($taskList->jsonSerialize(), Response::HTTP_CREATED);
     }
 
     /**
@@ -77,7 +86,11 @@ class TaskListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $taskList = TaskList::findOrFail($id);
+        $taskList->name = $request->name;
+        $taskList->save();
+
+        return response(null, Response::HTTP_OK);
     }
 
     /**
@@ -88,6 +101,8 @@ class TaskListController extends Controller
      */
     public function destroy($id)
     {
-        //
+        TaskList::destroy($id);
+
+        return response(null, Response::HTTP_OK);
     }
 }

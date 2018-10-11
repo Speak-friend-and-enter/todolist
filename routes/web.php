@@ -23,8 +23,12 @@ Route::resource('/task-lists', 'TaskListController', [
     'except' => ['edit', 'show', 'store']
 ]);
 
-Route::post('/task-lists/get-tasks', 'TaskListController@getTasks');
+Route::post('/task-lists/get-lists', 'TaskListController@getLists');
 
 Route::resource('/task', 'TaskController', [
-    'except' => ['edit', 'show', 'store']
+    'except' => ['create', 'edit', 'show', 'store']
 ]);
+
+Route::post('/task/create', 'TaskController@create');
+
+Route::post('/task/get-tasks', 'TaskController@getTasks');

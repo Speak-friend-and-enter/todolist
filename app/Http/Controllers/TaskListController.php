@@ -9,15 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskListController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +24,10 @@ class TaskListController extends Controller
         return view('task_lists');
     }
 
-    public function getTasks()
+    public function getLists()
     {
-        return response(TaskList::all()->jsonSerialize(), Response::HTTP_OK);
+        $taskLists = TaskList::where('user_id', Auth::id())->get();
+        return response($taskLists->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**
@@ -46,39 +43,6 @@ class TaskListController extends Controller
         $taskList->save();
 
         return response($taskList->jsonSerialize(), Response::HTTP_CREATED);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

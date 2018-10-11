@@ -41,7 +41,7 @@
                 });
             },
             read() {
-                window.axios.post('/task-lists/get-tasks').then(({ data }) => {
+                window.axios.post('/task-lists/get-lists').then(({ data }) => {
                     console.log(data);
                     data.forEach(list => {
                         this.lists.push(new List(list));
@@ -54,10 +54,15 @@
                 });
             },
             del(id) {
+                console.log('del');
                 window.axios.delete(`/task-lists/${id}`).then(() => {
                     let index = this.lists.findIndex(list => list.id === id);
                     this.lists.splice(index, 1);
                 });
+            },
+            viewTask(id) {
+                console.log('viewTasksParent');
+                // this.$modal.show('tasks', {ttt:'aaa'});
             }
         },
         created() {
@@ -67,5 +72,9 @@
 </script>
 
 <style scoped>
+
+#lists {
+    width: 100%;
+}
 
 </style>

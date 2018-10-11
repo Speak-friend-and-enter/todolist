@@ -15,7 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('welcome-component', require('./components/Welcome.vue'));
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal);
+
 Vue.component('task-lists-component', require('./components/TaskList.vue'));
 Vue.component('app-component', require('./components/App.vue'));
 

@@ -1,11 +1,17 @@
 <template>
 
     <div v-if="list === true" class="card col-lg-4 p-0">
+        <div v-if="share === true">
+            Enter user name to share:
+            <input type="text" v-model="shareName"/>
+            <button v-on:click="share = false">x</button>
+        </div>
         <div class="card-header">
             <label>
                 <input v-model="name">
             </label>
             <button class="btn-info" @click="updateListName">Update</button>
+            <button class="btn-warning" @click="shareList(id)">Share</button>
             <button class="btn-danger" @click="deleteList">Delete</button>
         </div>
         <div class="card-body">
@@ -40,6 +46,8 @@
         data() {
           return {
               list: true,
+              share: false,
+              shareName: '',
               tasks: []
           }
         },
@@ -102,7 +110,16 @@
                     let index = this.tasks.findIndex(task => task.id === id);
                     this.tasks.splice(index, 1);
                 });
-            }
+            },
+            shareList(id) {
+                if(this.shareName && this.share) {
+                    // console.log('true', id);
+                    window.axios.post('/share/create', {'shareName': this.shareName, 'listId': id}).then((data) => {
+                        console.log('true', data);
+                    });
+                }
+                this.share = true;
+            },
         }
     }
 </script>

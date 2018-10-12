@@ -6,9 +6,12 @@ use App\TaskList;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TaskListController extends Controller
 {
+    const DEFAULT_LIST_NAME = 'Default List Name';
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,8 +29,14 @@ class TaskListController extends Controller
 
     public function getLists()
     {
-        $taskLists = TaskList::where('user_id', Auth::id())->get();
-        return response($taskLists->jsonSerialize(), Response::HTTP_OK);
+        $taskLists = TaskList::where('user_id', Auth::id())->get()->all();
+        $sharedIds = DB::select('select task_list_id from shared_lists where shared_lists.user_to_id = ' . Auth::id());
+        foreach ($sharedIds as $key => $value) {
+            $sharedIds[$key] = $value->task_list_id;
+        }
+        $sharedLists = TaskList::whereIn('id', $sharedIds)->get()->all();
+        $taskLists = array_merge($taskLists, $sharedLists);
+        return response($taskLists, Response::HTTP_OK);
     }
 
     /**
@@ -38,7 +47,7 @@ class TaskListController extends Controller
     public function create()
     {
         $taskList = new TaskList();
-        $taskList->name = 'Default name';
+        $taskList->name = self::DEFAULT_LIST_NAME;
         $taskList->user_id = Auth::id();
         $taskList->save();
 

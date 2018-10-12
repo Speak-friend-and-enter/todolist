@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use App\Task;
 
 class TaskController extends Controller
 {
+    const DEFAULT_TASK_NAME = 'Default Task Name';
+
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    public function index()
-    {
-
     }
 
     public function getTasks(Request $request)
@@ -34,7 +30,7 @@ class TaskController extends Controller
     public function create(Request $request)
     {
         $task = new Task();
-        $task->name = 'Default Name';
+        $task->namme = self::DEFAULT_TASK_NAME;
         if($request->listId) {
             $task->task_list_id = $request->listId;
         } else {
@@ -54,7 +50,6 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        return response(null, Response::HTTP_BAD_GATEWAY);
         $task = Task::findOrFail($id);
         if($request->name) {
             $task->name = $request->name;

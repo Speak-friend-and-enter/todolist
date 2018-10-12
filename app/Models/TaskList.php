@@ -15,4 +15,9 @@ class TaskList extends Model
     {
         return $this->hasMany('App\Models\Task');
     }
+
+    public function sharedLists()
+    {
+        return $this->hasMany('App\Models\SharedList');
+    }
 }

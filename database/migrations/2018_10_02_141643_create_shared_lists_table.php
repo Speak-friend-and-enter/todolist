@@ -15,7 +15,11 @@ class CreateSharedListsTable extends Migration
     {
         Schema::create('shared_lists', function (Blueprint $table) {
             $table->increments('id');
+
             $table->unsignedInteger('task_list_id');
+            $table->foreign('task_list_id')->references('id')
+                ->on('task_lists')->onDelete('cascade');
+
             $table->unsignedInteger('user_from_id');
             $table->unsignedInteger('user_to_id');
             $table->timestamps();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SharedList;
 use App\TaskList;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -78,7 +79,11 @@ class TaskListController extends Controller
      */
     public function destroy($id)
     {
-        TaskList::destroy($id);
+        if(TaskList::find($id)->user_id != Auth::id()) {
+            SharedList::where('task_list_id', $id)->where('user_to_id', Auth::id())->delete();
+        } else {
+            TaskList::destroy($id);
+        }
 
         return response(null, Response::HTTP_OK);
     }

@@ -35,3 +35,7 @@ Route::post('/task/get-tasks', 'TaskController@getTasks');
 
 Route::post('/share/create', 'ShareController@create');
 Route::post('/share/delete', 'ShareController@delete');
+
+
+Route::post('/user/upload-logo', 'UserController@upload');
+Route::get('/user/get-logo', 'UserController@getLogo');

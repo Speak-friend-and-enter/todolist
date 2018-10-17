@@ -30,7 +30,7 @@ class TaskController extends Controller
     public function create(Request $request)
     {
         $task = new Task();
-        $task->namme = self::DEFAULT_TASK_NAME;
+        $task->name = self::DEFAULT_TASK_NAME;
         if($request->listId) {
             $task->task_list_id = $request->listId;
         } else {

@@ -24,6 +24,9 @@ class ShareController extends Controller
     {
         $sharedList = new SharedList();
         if($request->shareName && $request->listId) {
+            if($request->shareName === Auth::user()->username) {
+                return response(null, Response::HTTP_BAD_REQUEST);
+            }
             $userToId = DB::table('users')->where('username', '=', $request->shareName)->get()->first();
             if(!$userToId) {
                 return response(null, Response::HTTP_BAD_REQUEST);

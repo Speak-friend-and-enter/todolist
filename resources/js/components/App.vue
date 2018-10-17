@@ -12,10 +12,14 @@
                     @update="update"
                     @delete="del"
             ></task-lists-component>
+            <div class="card col-lg-4 m-2 p-0 text-center" @click="create()">
+                +
+            </div>
         </div>
-        <div>
-            <button @click="create()">Add</button>
-        </div>
+        <!--<div>-->
+            <!--<button @click="create()">Add</button>-->
+        <!--</div>-->
+
     </div>
 
 </template>
@@ -72,9 +76,15 @@
 </script>
 
 <style scoped>
-
-#lists {
-    width: 100%;
-}
+    #lists {
+        width: 100%;
+    }
+    .card {
+        min-height: 160px;
+        max-width: 365px;
+    }
+    .card:hover {
+        background-color: #a1a1b4;
+    }
 
 </style>

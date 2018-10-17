@@ -1,12 +1,12 @@
 <template>
 
-    <div v-if="list === true" class="card col-lg-4 p-0">
+    <div v-if="list === true" class="card col-lg-4 m-2 p-0">
         <div v-if="share === true">
             Enter user name to share:
             <input type="text" v-model="shareName"/>
             <button v-on:click="share = false">x</button>
         </div>
-        <div class="card-header">
+        <div class="card-header" v-on:click.self="viewTasks">
             <label>
                 <input v-model="name">
             </label>
@@ -14,14 +14,14 @@
             <button class="btn-warning" @click="shareList(id)">Share</button>
             <button class="btn-danger" @click="deleteList">Delete</button>
         </div>
-        <div class="card-body">
-            <button class="btn-info" v-on:click="viewTasks">View</button>
+        <div class="card-body text-center" v-on:click="viewTasks">
+            View
         </div>
     </div>
 
-    <div v-else class="card col-lg-4 p-0">
-        <ul>
-            <li v-for="task in tasks">
+    <div v-else class="card col-lg-4 m-2 p-0">
+        <ul @click.self="closeTasks">
+            <li v-for="task in tasks" @click.self="closeTasks">
                 <label>
                     <input type="checkbox" v-on:click.prevent="changeTaskStatus(task.id, task.status)" v-bind:checked="task.status"/>
                 </label>
@@ -31,7 +31,7 @@
                 <button class="btn-info" @click="deleteTask(task.id)">Delete</button>
             </li>
         </ul>
-        <div class="card-body">
+        <div class="card-body" @click.self="closeTasks">
             <button class="btn-info" @click="createTask">Add Task</button>
             <button class="btn-toolbar" @click="closeTasks">Close</button>
         </div>
